@@ -218,7 +218,7 @@ export class DashboardMenuBuilder {
     if (role === 'warehouse') {
       menu.push(
         {
-          label: 'Склад продуктів',
+          label: 'Склад',
           icon: 'pi pi-warehouse',
           command: () => (component.selectedSection = 'ingredients'),
         },
