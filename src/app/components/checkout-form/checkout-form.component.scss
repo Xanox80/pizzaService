@@ -1,0 +1,64 @@
+form {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+mat-form-field {
+  display: block;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #fc0000;
+  color: #fff;
+  border-radius: 8px;
+  transition: background-color 0.2s linear;
+}
+
+button[type="submit"]:hover {
+  background-color: #6a9538;
+  transition: background-color 0.2s linear;
+}
+
+.payment-message {
+  max-width: 500px;
+  margin: 80px auto;
+  padding: 20px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #2e7d32;
+  background-color: #e8f5e9;
+  border: 1px solid #c8e6c9;
+  border-radius: 10px;
+}
+
+@media (max-width: 600px) {
+  form {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  button[type="submit"] {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .payment-message {
+    font-size: 18px;
+    padding: 16px;
+  }
+}

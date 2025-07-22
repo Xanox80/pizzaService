@@ -1,0 +1,79 @@
+<div class="edit-container">
+  <h2>{{ isNewPizza ? "Додати нову піцу" : "Редагувати піцу" }}</h2>
+  <form (ngSubmit)="onSubmit()" #pizzaForm="ngForm">
+    <div class="form-group">
+      <label for="name">Назва піци</label>
+      <input
+        id="name"
+        type="text"
+        name="name"
+        [(ngModel)]="pizza.name"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Опис</label>
+      <input
+        id="description"
+        name="description"
+        [(ngModel)]="pizza.description"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="price">Ціна</label>
+      <input
+        id="price"
+        type="number"
+        name="price"
+        [(ngModel)]="pizza.price"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="category">Категорія</label>
+      <input
+        id="category"
+        type="text"
+        name="category"
+        [(ngModel)]="pizza.category"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="image">URL зображення</label>
+      <input
+        id="image"
+        type="text"
+        name="image"
+        [(ngModel)]="pizza.image"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="rating">Рейтинг</label>
+      <input
+        id="rating"
+        type="number"
+        name="rating"
+        [(ngModel)]="pizza.rating"
+        min="0"
+        max="5"
+        step="0.1"
+        required
+      />
+    </div>
+
+    <div class="button-group">
+      <button type="submit" [disabled]="!pizzaForm.form.valid">
+        {{ isNewPizza ? "Додати" : "Зберегти" }}
+      </button>
+      <button type="button" (click)="goBack()">Скасувати</button>
+    </div>
+  </form>
+</div>

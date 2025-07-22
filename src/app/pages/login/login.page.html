@@ -1,0 +1,41 @@
+<div class="login-container">
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <h2>Вхід в систему</h2>
+
+    <div class="p-field">
+      <label for="username">Логін</label>
+      <input
+        pInputText
+        id="username"
+        type="text"
+        name="username"
+        [(ngModel)]="username"
+        required
+        class="full-width"
+      />
+    </div>
+
+    <div class="p-field">
+      <label for="password">Пароль</label>
+      <input
+        pInputText
+        id="password"
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        required
+        class="full-width"
+      />
+    </div>
+
+    <button
+      pButton
+      type="submit"
+      label="Увійти"
+      class="p-button-primary full-width"
+      [disabled]="!loginForm.form.valid"
+    ></button>
+
+    <div *ngIf="error" class="error-message p-error">{{ error }}</div>
+  </form>
+</div>

@@ -1,0 +1,67 @@
+.header-toolbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: rgb(243, 14, 14);
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .cart-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  mat-icon {
+    font-size: 28px;
+  }
+  .goToFeedback {
+    background: linear-gradient(135deg, #ffcc70, #ff8c42);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: bold;
+    padding: 8px 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .goToFeedback:hover {
+    background: linear-gradient(135deg, #ffa500, #ff5722);
+    transform: translateY(-2px);
+  }
+
+  .goToFeedback:active {
+    transform: scale(0.98);
+  }
+  .gotoAdds {
+    background: linear-gradient(135deg, #70c1ff, #42a5f5);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: bold;
+    padding: 8px 16px;
+    margin-left: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .gotoAdds:hover {
+    background: linear-gradient(135deg, #007bff, #2273ff);
+    transform: translateY(-2px); /* трохи піднімаємо кнопку */
+  }
+
+  .gotoAdds:active {
+    transform: scale(0.98); /* ефект при натисканні */
+  }
+}

@@ -1,0 +1,11 @@
+<div class="feedback-container">
+  <div class="feedback-form">
+    <h3>Залишити відгук</h3>
+    <textarea [(ngModel)]="feedbackText" placeholder="Ваш відгук..."></textarea>
+    <button class="send-btn" (click)="addFeedback()">Надіслати</button>
+    <button class="goback-btn" (click)="goback()">Повернутися на гловну</button>
+    <div *ngIf="feedbackSuccess" class="feedback-success">
+      Відгук збережено!
+    </div>
+  </div>
+</div>

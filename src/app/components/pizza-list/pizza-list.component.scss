@@ -1,0 +1,65 @@
+.filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+
+  button {
+    background: #fff;
+    color: #e31837;
+    border: 2px solid #e31837;
+    border-radius: 24px;
+    padding: 8px 22px;
+    font-size: 1rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+    outline: none;
+
+    &:hover,
+    &.active {
+      background: #e31837;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(227, 24, 55, 0.15);
+    }
+  }
+}
+
+:host {
+  display: block;
+  padding: 1rem;
+}
+
+.pizza-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+@media (max-width: 1200px) {
+  .pizza-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .pizza-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .pizza-list {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+}

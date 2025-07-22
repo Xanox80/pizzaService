@@ -1,0 +1,20 @@
+<div class="additional-products-container">
+  <mat-card class="additional-products-card">
+    <div class="additional-products-image-card">
+      <img
+        [src]="additionalProducts.image"
+        alt="{{ additionalProducts.name }}"
+      />
+    </div>
+    <mat-card-title class="pizza-name">
+      {{ additionalProducts.name }}
+    </mat-card-title>
+    <mat-card-subtitle class="pizza-desc">
+      {{ additionalProducts.description }}
+    </mat-card-subtitle>
+    <div class="pizza-price">{{ additionalProducts.price }} грн</div>
+    <button mat-raised-button color="warn" (click)="addToCart()">
+      + В кошик
+    </button>
+  </mat-card>
+</div>

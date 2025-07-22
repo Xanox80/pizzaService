@@ -1,0 +1,20 @@
+<mat-toolbar color="primary" class="header-toolbar">
+  <span class="logo">🍕 PizzaGo</span>
+
+  <span class="spacer"></span>
+  <button class="goToFeedback" (click)="goToFeedback()">Залишити відгук</button>
+  <button class="gotoAdds" (click)="gotoAdds()">Соуси та Напої</button>
+  <a mat-button routerLink="/cart" class="cart-link">
+    <button
+      mat-icon-button
+      [matBadge]="cartItemsCount"
+      matBadgeColor="accent"
+      *ngIf="cartItemsCount > 0"
+    >
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+    <button mat-icon-button *ngIf="cartItemsCount === 0">
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+  </a>
+</mat-toolbar>

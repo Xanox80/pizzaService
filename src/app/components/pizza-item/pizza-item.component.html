@@ -1,0 +1,31 @@
+<mat-card class="pizza-card">
+  <div class="pizza-image-container">
+    <img [src]="pizza.image" alt="{{ pizza.name }}" />
+  </div>
+  <mat-card-title class="pizza-name">{{ pizza.name }}</mat-card-title>
+  <mat-card-subtitle class="pizza-desc">{{
+    pizza.description
+  }}</mat-card-subtitle>
+  <div class="pizza-price">{{ pizza.price }} грн</div>
+  <button mat-raised-button color="warn" (click)="addToCart()">
+    + В кошик
+  </button>
+</mat-card>
+
+<div *ngIf="showRatingPrompt" class="rating-prompt-backdrop">
+  <div class="rating-prompt-modal">
+    <h3>Оцініть якість наших послуг!😊</h3>
+    <p>Просимо Вас залишити відгук, щоб зробити нас кращими 🍕</p>
+    <button mat-button color="primary" (click)="closeRatingPrompt()">
+      Закрити
+    </button>
+  </div>
+</div>
+
+<div *ngIf="showAdvice" class="advice-backdrop">
+  <div class="advice-modal">
+    <h3>Порада дня</h3>
+    <p>{{ currentAdvice }}</p>
+    <button mat-button color="primary" (click)="closeAdvice()">Закрити</button>
+  </div>
+</div>
