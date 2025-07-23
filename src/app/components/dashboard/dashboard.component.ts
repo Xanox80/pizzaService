@@ -54,6 +54,7 @@ export class PanelMenuMultipleDemo implements OnInit, OnDestroy {
   ordersToday = 15;
   ordersWeek = 80;
   ordersMonth = 1001;
+  currentTab = 'popular';
   averageCheck = 350;
   bestCustomer = 'Богдан';
   bestEmployee = 'Дмитро';

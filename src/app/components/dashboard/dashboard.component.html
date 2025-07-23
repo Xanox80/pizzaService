@@ -1,7 +1,7 @@
 <div class="dashboard-container">
   <button
     class="burger-btn"
-    [class.burger-btn--up]="menuVisible"
+    [ngClass]="{ 'burger-btn--up': menuVisible }"
     (click)="toggleMenu()"
   >
     <span></span>
@@ -9,7 +9,7 @@
     <span></span>
   </button>
 
-  <div class="dashboard-menu" [class.open]="menuVisible">
+  <div class="dashboard-menu" [ngClass]="{ open: menuVisible }">
     <p-panelMenu
       [model]="items"
       [style]="{ width: '260px' }"
@@ -26,273 +26,239 @@
         <div class="progress-bar-inner" [style.width.%]="ordersProgress"></div>
       </div>
       <div class="progress-info">
-        {{ ordersMonth }} / {{ goalOrders }} замовлень
-        <span *ngIf="ordersLeft > 0"> (ще {{ ordersLeft }}!)</span>
-        <span *ngIf="ordersLeft === 0"> 🎉 Мета досягнута!</span>
+        {{ ordersMonth }} / {{ goalOrders }} замовлень @if (ordersLeft > 0) {
+        <span> (ще {{ ordersLeft }}!)</span>
+        } @else if (ordersLeft === 0) {
+        <span> 🎉 Мета досягнута!</span>
+        }
       </div>
     </div>
 
-    <ng-container [ngSwitch]="selectedSection">
-      <ng-container *ngSwitchCase="'orders'">
-        <div class="stat-card">
-          <i class="pi pi-calendar stat-icon"></i>
-          <div>
-            <h3>Кількість замовлень</h3>
-            <ul>
-              <li>
-                Сьогодні: <b>{{ ordersToday }}</b>
-              </li>
-              <li>
-                За тиждень: <b>{{ ordersWeek }}</b>
-              </li>
-              <li>
-                За місяць: <b>{{ ordersMonth }}</b>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </ng-container>
-      <ng-container *ngSwitchCase="'ingredients'">
-        <div class="warehouse-section">
-          <h3>Склад продуктів</h3>
-          <div class="warehouse-list">
-            <div class="warehouse-item" *ngFor="let product of products">
-              <img
-                [src]="product.image"
-                [alt]="product.name"
-                class="warehouse-img"
-              />
-              <div class="warehouse-info">
-                <h4>{{ product.name }}</h4>
-                <p>{{ product.description }}</p>
-                <div class="warehouse-meta">
-                  <span class="warehouse-price">{{ product.price }} грн</span>
-                  <span class="warehouse-category">{{ product.category }}</span>
-                </div>
-              </div>
+    @switch (selectedSection) { @case ('orders') {
+    <div class="stat-card">
+      <i class="pi pi-calendar stat-icon"></i>
+      <div>
+        <h3>Кількість замовлень</h3>
+        <ul>
+          <li>
+            Сьогодні: <b>{{ ordersToday }}</b>
+          </li>
+          <li>
+            За тиждень: <b>{{ ordersWeek }}</b>
+          </li>
+          <li>
+            За місяць: <b>{{ ordersMonth }}</b>
+          </li>
+        </ul>
+      </div>
+    </div>
+    } @case ('ingredients') {
+    <div class="warehouse-section">
+      <h3>Склад продуктів</h3>
+      <div class="warehouse-list">
+        @for (product of products; track product) {
+        <div class="warehouse-item">
+          <img
+            [src]="product.image"
+            [alt]="product.name"
+            class="warehouse-img"
+          />
+          <div class="warehouse-info">
+            <h4>{{ product.name }}</h4>
+            <p>{{ product.description }}</p>
+            <div class="warehouse-meta">
+              <span class="warehouse-price">{{ product.price }} грн</span>
+              <span class="warehouse-category">{{ product.category }}</span>
             </div>
           </div>
         </div>
-      </ng-container>
-      <ng-container *ngSwitchCase="'popular'">
-        <h3>Найпопулярніша піца</h3>
-        <ng-container *ngIf="mostPopularPizza; else noPizza">
-          <div class="popular-pizza-card">
-            <b>{{ mostPopularPizza.name }}</b> —
-            {{ mostPopularPizza.orders }} замовлень
-          </div>
-        </ng-container>
-        <ng-template #noPizza>
-          <p>Немає даних про піци.</p>
-        </ng-template>
-      </ng-container>
-      <ng-container *ngSwitchCase="'average'">
-        <div class="stat-card">
-          <i class="pi pi-wallet stat-icon"></i>
-          <div>
-            <h3>Середній чек</h3>
-            <p class="average-check">
-              <b>{{ averageCheck }} ₴</b>
-            </p>
-          </div>
-        </div>
-      </ng-container>
-      <ng-container *ngSwitchCase="'logFeedbacks'">
-        <h3>Логи видалення відгуків</h3>
-        <div
-          *ngFor="let log of getFeedbackLogs(); let i = index"
-          class="log-item"
-        >
-          <p class="log-text">"{{ log.text }}"</p>
-          <p class="log-date">Залишено: {{ log.date }}</p>
-          <p class="log-removed">Видалено: {{ log.removedAt }}</p>
-          <p class="log-user">Видалив: {{ log.removedBy }}</p>
-          <button class="closeLogs" (click)="deleteLog(i)">Видалити</button>
-        </div>
-      </ng-container>
-
-      <ng-container *ngSwitchCase="'LogPizza'">
-        <h3>Логи редагування піц</h3>
-        <div *ngFor="let log of getPizzaLogs(); let i = index" class="log-item">
-          <p class="log-text">{{ log.user }} {{ log.action }}</p>
-          <p class="log-user">Назва піцци: ({{ log.name }})</p>
-          <p class="log-date">Час: {{ log.time }}</p>
-          <button class="closeLogs" (click)="deletePizzaLog(i)">
+        }
+      </div>
+    </div>
+    } @case ('popular') {
+    <h3>Найпопулярніша піца</h3>
+    @if (mostPopularPizza) {
+    <div class="popular-pizza-card">
+      <b>{{ mostPopularPizza.name }}</b> —
+      {{ mostPopularPizza.orders }} замовлень
+    </div>
+    } @else {
+    <p>Немає даних про піци.</p>
+    } } @case ('average') {
+    <div class="stat-card">
+      <i class="pi pi-wallet stat-icon"></i>
+      <div>
+        <h3>Середній чек</h3>
+        <p class="average-check">
+          <b>{{ averageCheck }} ₴</b>
+        </p>
+      </div>
+    </div>
+    } @case ('logFeedbacks') {
+    <h3>Логи видалення відгуків</h3>
+    @for (log of getFeedbackLogs(); track $index) {
+    <div class="log-item">
+      <p class="log-text">"{{ log.text }}"</p>
+      <p class="log-date">Залишено: {{ log.date }}</p>
+      <p class="log-removed">Видалено: {{ log.removedAt }}</p>
+      <p class="log-user">Видалив: {{ log.removedBy }}</p>
+      <button class="closeLogs" (click)="deleteLog($index)">Видалити</button>
+    </div>
+    } } @case ('LogPizza') {
+    <h3>Логи редагування піц</h3>
+    @for (log of getPizzaLogs(); track $index) {
+    <div class="log-item">
+      <p class="log-text">{{ log.user }} {{ log.action }}</p>
+      <p class="log-user">Назва піцци: ({{ log.name }})</p>
+      <p class="log-date">Час: {{ log.time }}</p>
+      <button class="closeLogs" (click)="deletePizzaLog($index)">
+        Видалити
+      </button>
+    </div>
+    } } @case ('admins') { @if (SelectedAdmins) {
+    <div class="admins">
+      <i class="pi pi-users workers-icon"></i>
+      <div>
+        <h3>{{ SelectedAdmins.name }}</h3>
+        <p>
+          Скільки років: <b>{{ SelectedAdmins.age }}</b>
+        </p>
+        <p>
+          Номер телефону: <b>{{ SelectedAdmins.phone }}</b>
+        </p>
+      </div>
+    </div>
+    } } @case ('bestCustomer') {
+    <div class="stat-card">
+      <i class="pi pi-user stat-icon"></i>
+      <div>
+        <h3>Найкращий покупець</h3>
+        <p class="best-customer">
+          <b>{{ bestCustomer }}</b>
+        </p>
+      </div>
+    </div>
+    } @case ('bestEmployee') {
+    <div class="stat-card">
+      <i class="pi pi-users stat-icon"></i>
+      <div>
+        <h3>Найкращий працівник</h3>
+        <p class="best-employee">
+          <b>{{ bestEmployee }}</b>
+        </p>
+      </div>
+    </div>
+    } @case ('logProductRemove') {
+    <h3>Логи видалення замовлень</h3>
+    @if (getOrderRemoveLogs().length === 0) {
+    <p>Логів немає.</p>
+    } @for (log of getOrderRemoveLogs(); track $index) {
+    <div class="log-item">
+      <p class="log-text">
+        "{{ log.name }}" (x{{ log.quantity }}) – {{ log.price }} грн
+      </p>
+      <p class="log-date">Дата замовлення: невідомо</p>
+      <p class="log-removed">Видалено: {{ log.removedAt | date : "medium" }}</p>
+      <p class="log-user">Видалив: {{ log.removedBy }}</p>
+      <button class="closeLogs" (click)="deleteOrderLog($index)">
+        Видалити
+      </button>
+    </div>
+    } } @case ('feedback') {
+    <div class="feedbacks-section">
+      <h3>Відгуки та поради користувачів</h3>
+      @if (feedbacks.length === 0) {
+      <div class="text-feedback">Відгуків ще немає.</div>
+      }
+      <ul>
+        @for (fb of feedbacks; track $index) {
+        <li>
+          <span>{{ fb.text }}</span>
+          <span class="feedback-date">{{ fb.date | date : "short" }}</span>
+          <button class="btn-feedback" (click)="removeFeedback($index)">
             Видалити
           </button>
-        </div>
-      </ng-container>
-
-      <ng-container>
-        <div
-          class="admins"
-          *ngIf="selectedSection === 'admins' && SelectedAdmins"
-        >
-          <i class="pi pi-users workers-icon"></i>
-          <div>
-            <h3>{{ SelectedAdmins.name }}</h3>
-            <p>
-              Скільки років: <b>{{ SelectedAdmins.age }}</b>
-            </p>
-            <p>
-              Номер телефону: <b>{{ SelectedAdmins.phone }}</b>
-            </p>
+        </li>
+        }
+      </ul>
+    </div>
+    } @case ('workers') { @if (selectedWorker) {
+    <div class="stat-card">
+      <i class="pi pi-users workers-icon"></i>
+      <div>
+        <h3>{{ selectedWorker.name }}</h3>
+        <p>
+          Посада: <b>{{ selectedWorker.position }}</b>
+        </p>
+        <p>
+          Рейтинг:
+          <span class="rating">
+            @if (selectedWorker.rating !== undefined) { @for (star of
+            getStars(selectedWorker.rating); track star) {
+            <i
+              class="pi pi-star star"
+              [ngClass]="{ filled: star === 'filled' }"
+            ></i>
+            } } @else {
+            <span>Рейтинг відсутній</span>
+            }
+          </span>
+        </p>
+      </div>
+    </div>
+    } } @case ('megaDiscount') {
+    <div class="stat-card">
+      <i class="pi pi-tag stat-icon"></i>
+      <div>
+        <h3>Акція на піци</h3>
+        <p class="mega-discount">
+          <b>{{ megaDiscount }}</b>
+        </p>
+      </div>
+    </div>
+    } @case ('pizzaOrders') {
+    <div class="cart-container">
+      @if (cartItems.length === 0) {
+      <div class="empty-cart">На даний момент закази відсутні</div>
+      } @if (cartItems.length > 0) {
+      <div class="cart-items">
+        @for (item of cartItems; track item.id) {
+        <div class="cart-item">
+          <img [src]="item.image" [alt]="item.name" class="item-image" />
+          <div class="item-details">
+            <h3>{{ item.name }}</h3>
+            <p class="price">{{ item.price }} грн</p>
           </div>
-        </div>
-      </ng-container>
-
-      <ng-container *ngSwitchCase="'bestCustomer'">
-        <div class="stat-card">
-          <i class="pi pi-user stat-icon"></i>
-          <div>
-            <h3>Найкращий покупець</h3>
-            <p class="best-customer">
-              <b>{{ bestCustomer }}</b>
-            </p>
+          <div class="quantity-controls">
+            <span>{{ item.quantity }}</span>
           </div>
+          <button class="remove-btn" (click)="remove(item.id)">Видалити</button>
         </div>
-      </ng-container>
-      <ng-container *ngSwitchCase="'bestEmployee'">
-        <div class="stat-card">
-          <i class="pi pi-users stat-icon"></i>
-          <div>
-            <h3>Найкращий працівник</h3>
-            <p class="best-employee">
-              <b>{{ bestEmployee }}</b>
-            </p>
-          </div>
-        </div>
-      </ng-container>
-      <ng-container *ngSwitchCase="'logProductRemove'">
-        <h3>Логи видалення замовлень</h3>
-        <div *ngIf="getOrderRemoveLogs().length === 0">
-          <p>Логів немає.</p>
-        </div>
-        <div
-          *ngFor="let log of getOrderRemoveLogs(); let i = index"
-          class="log-item"
-        >
-          <p class="log-text">
-            "{{ log.name }}" (x{{ log.quantity }}) – {{ log.price }} грн
-          </p>
-          <p class="log-date">Дата замовлення: невідомо</p>
-          <p class="log-removed">
-            Видалено: {{ log.removedAt | date : "medium" }}
-          </p>
-          <p class="log-user">Видалив: {{ log.removedBy }}</p>
-          <button class="closeLogs" (click)="deleteOrderLog(i)">
-            Видалити
-          </button>
-        </div>
-      </ng-container>
-
-      <ng-container *ngSwitchCase="'feedback'">
-        <div class="feedbacks-section">
-          <h3>Відгуки та поради користувачів користувачів</h3>
-          <div class="text-feedback" *ngIf="feedbacks.length === 0">
-            Відгуків ще немає.
-          </div>
-          <ul>
-            <li *ngFor="let fb of feedbacks; let i = index">
-              <span>{{ fb.text }}</span>
-
-              <span class="feedback-date">{{ fb.date | date : "short" }}</span>
-              <button class="btn-feedback" (click)="removeFeedback(i)">
-                Видалити
-              </button>
-            </li>
-          </ul>
-        </div>
-      </ng-container>
-      <ng-container>
-        <div
-          class="stat-card"
-          *ngIf="selectedSection === 'workers' && selectedWorker"
-        >
-          <i class="pi pi-users workers-icon"></i>
-          <div>
-            <h3>{{ selectedWorker.name }}</h3>
-            <p>
-              Посада: <b>{{ selectedWorker.position }}</b>
-            </p>
-            <p>
-              Рейтинг:
-              <span class="rating" *ngIf="selectedWorker.rating !== undefined">
-                <ng-container
-                  *ngFor="let star of getStars(selectedWorker.rating)"
-                >
-                  <i
-                    class="pi pi-star star"
-                    [ngClass]="{ filled: star === 'filled' }"
-                  ></i>
-                </ng-container>
-              </span>
-            </p>
-          </div>
-        </div>
-      </ng-container>
-
-      <ng-container *ngSwitchCase="'megaDiscount'">
-        <div class="stat-card">
-          <i class="pi pi-tag stat-icon"></i>
-          <div>
-            <h3>Акція на піци</h3>
-            <p class="mega-discount">
-              <b>{{ megaDiscount }}</b>
-            </p>
-          </div>
-        </div>
-      </ng-container>
-      <ng-container *ngSwitchCase="'pizzaOrders'">
-        <div class="cart-container">
-          <div>
-            <div *ngIf="cartItems.length === 0" class="empty-cart">
-              На даний момент закази відсутні
-            </div>
-          </div>
-
-          <div *ngIf="cartItems.length > 0" class="cart-items">
-            <div *ngFor="let item of cartItems" class="cart-item">
-              <img [src]="item.image" [alt]="item.name" class="item-image" />
-              <div class="item-details">
-                <h3>{{ item.name }}</h3>
-                <p class="price">{{ item.price }} грн</p>
-              </div>
-              <div class="quantity-controls">
-                <span>{{ item.quantity }}</span>
-              </div>
-              <button class="remove-btn" (click)="remove(item.id)">
-                Видалити
-              </button>
-            </div>
-          </div>
-        </div>
-      </ng-container>
-
-      <ng-container *ngSwitchCase="'megaDiscountEnd'">
-        <div class="stat-card">
-          <i class="pi pi-clock stat-icon"></i>
-          <div>
-            <h3>Акція на третю піцу</h3>
-            <p class="mega-discount-end">
-              {{ megaDiscountEnd }}
-            </p>
-          </div>
-        </div>
-      </ng-container>
-      <ng-container *ngSwitchCase="'LogProductRemove'">
-        <h3>Логи видалення замовлень</h3>
-        <div *ngFor="let log of getOrderRemoveLogs()" class="log-item">
-          <p class="log-text">ID: {{ log.id }} | {{ log.name }}</p>
-          <p class="log-date">
-            Ціна: {{ log.price }} грн, Кількість: {{ log.quantity }}
-          </p>
-          <p class="log-removed">Видалено: {{ log.removedAt }}</p>
-          <p class="log-user">Видалив: {{ log.removedBy }}</p>
-        </div>
-      </ng-container>
-
-      <ng-container *ngSwitchDefault> </ng-container>
-    </ng-container>
+        }
+      </div>
+      }
+    </div>
+    } @case ('megaDiscountEnd') {
+    <div class="stat-card">
+      <i class="pi pi-clock stat-icon"></i>
+      <div>
+        <h3>Акція на третю піцу</h3>
+        <p class="mega-discount-end">
+          {{ megaDiscountEnd }}
+        </p>
+      </div>
+    </div>
+    } @case ('LogProductRemove') {
+    <h3>Логи видалення замовлень</h3>
+    @for (log of getOrderRemoveLogs(); track log.id) {
+    <div class="log-item">
+      <p class="log-text">ID: {{ log.id }} | {{ log.name }}</p>
+      <p class="log-date">
+        Ціна: {{ log.price }} грн, Кількість: {{ log.quantity }}
+      </p>
+      <p class="log-removed">Видалено: {{ log.removedAt }}</p>
+      <p class="log-user">Видалив: {{ log.removedBy }}</p>
+    </div>
+    } } @default {} }
   </div>
 </div>
