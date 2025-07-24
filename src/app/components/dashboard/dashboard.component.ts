@@ -27,14 +27,7 @@ import { admin, Admin } from '../../models/admin-model';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    PanelMenu,
-    NgIf,
-    NgSwitch,
-    NgSwitchCase,
-    NgSwitchDefault,
-  ],
+  imports: [CommonModule, PanelMenu],
 })
 export class PanelMenuMultipleDemo implements OnInit, OnDestroy {
   items: MenuItem[] = [];
