@@ -5,7 +5,7 @@ import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-feedback',
-  imports: [FormsModule, NgIf],
+  imports: [FormsModule],
   templateUrl: './feedback.component.html',
   styleUrl: './feedback.component.scss',
 })

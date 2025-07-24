@@ -1,32 +1,28 @@
 <div class="filters">
+  @for (category of categories; track category) {
   <button
-    *ngFor="let category of categories"
     [class.active]="selectedCategory === category"
     (click)="setCategory(category)"
   >
     {{ category }}
   </button>
-
-  &nbsp;|&nbsp;
+  } &nbsp;|&nbsp;
 
   <button (click)="setSort('price')">
-    Ціна 💲
-    <span *ngIf="sort === 'price'">
-      {{ sortDir === "asc" ? "⬆️" : "⬇️" }}
-    </span>
+    Ціна 💲 @if (sort === 'price') {
+    {{ sortDir === "asc" ? "⬆️" : "⬇️" }}
+    }
   </button>
 
   <button (click)="setSort('rating')">
-    Рейтинг 🥇
-    <span *ngIf="sort === 'rating'">
-      {{ sortDir === "asc" ? "⬆️" : "⬇️" }}
-    </span>
+    Рейтинг 🥇 @if (sort === 'rating') {
+    {{ sortDir === "asc" ? "⬆️" : "⬇️" }}
+    }
   </button>
 </div>
 
 <div class="pizza-list">
-  <app-pizza-item
-    *ngFor="let pizza of filteredPizzas"
-    [pizza]="pizza"
-  ></app-pizza-item>
+  @for (pizza of filteredPizzas; track pizza.id) {
+  <app-pizza-item [pizza]="pizza"></app-pizza-item>
+  }
 </div>

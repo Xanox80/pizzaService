@@ -1,4 +1,5 @@
-<form *ngIf="!submitted" (ngSubmit)="submit(f)" #f="ngForm">
+@if (!submitted) {
+<form (ngSubmit)="submit(f)" #f="ngForm">
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Ім’я</mat-label>
     <input
@@ -8,7 +9,9 @@
       required
       #name="ngModel"
     />
-    <mat-error *ngIf="name.invalid && name.touched">Ім’я обов’язкове</mat-error>
+    @if (name.invalid && name.touched) {
+    <mat-error>Ім’я обов’язкове</mat-error>
+    }
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="full-width">
@@ -22,15 +25,14 @@
       maxlength="14"
       #phone="ngModel"
     />
-    <mat-error *ngIf="phone.errors?.['required'] && phone.touched">
-      Телефон обов’язковий
-    </mat-error>
-
-    <mat-error
-      *ngIf="phone.errors?.['minlength'] && phone.touched && !phone.errors?.['required'] && !phone.errors?.['maxlength']"
-    >
+    @if (phone.errors?.['required'] && phone.touched) {
+    <mat-error>Телефон обов’язковий</mat-error>
+    } @if ( phone.errors?.['minlength'] && phone.touched &&
+    !phone.errors?.['required'] && !phone.errors?.['maxlength'] ) {
+    <mat-error>
       Телефон має містити не менше 10 цифр та не більше 13 цифр
     </mat-error>
+    }
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="full-width">
@@ -42,9 +44,9 @@
       required
       #email="ngModel"
     />
-    <mat-error *ngIf="email.invalid && email.touched"
-      >Email обов’язковий</mat-error
-    >
+    @if (email.invalid && email.touched) {
+    <mat-error>Email обов’язковий</mat-error>
+    }
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="full-width">
@@ -56,9 +58,9 @@
       required
       #address="ngModel"
     />
-    <mat-error *ngIf="address.invalid && address.touched"
-      >Адреса обов’язкова</mat-error
-    >
+    @if (address.invalid && address.touched) {
+    <mat-error>Адреса обов’язкова</mat-error>
+    }
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="full-width">
@@ -70,7 +72,8 @@
     ✅ Підтвердити замовлення
   </button>
 </form>
-
-<div *ngIf="submitted" class="payment-message">
+} @else {
+<div class="payment-message">
   <b>Оплата...</b>
 </div>
+}

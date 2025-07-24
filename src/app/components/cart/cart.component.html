@@ -1,19 +1,25 @@
 <div class="cart-container">
   <h2>Кошик 🛒</h2>
+
   <div>
     <button class="back-btn" (click)="productsPage()">Повернутися</button>
-    <div *ngIf="cartItems.length === 0" class="empty-cart">
-      Кошик порожній 😢
-    </div>
+
+    @if (cartItems.length === 0) {
+    <div class="empty-cart">Кошик порожній 😢</div>
+    }
   </div>
 
-  <div *ngIf="cartItems.length > 0" class="cart-items">
-    <div *ngFor="let item of cartItems" class="cart-item">
+  @if (cartItems.length > 0) {
+  <div class="cart-items">
+    @for (item of cartItems; track item.id) {
+    <div class="cart-item">
       <img [src]="item.image" [alt]="item.name" class="item-image" />
+
       <div class="item-details">
         <h3>{{ item.name }}</h3>
         <p class="price">{{ item.price }} грн</p>
       </div>
+
       <div class="quantity-controls">
         <button
           (click)="changeQty(item.id, item.quantity - 1)"
@@ -24,8 +30,10 @@
         <span>{{ item.quantity }}</span>
         <button (click)="changeQty(item.id, item.quantity + 1)">+</button>
       </div>
+
       <button class="remove-btn" (click)="remove(item.id)">Видалити</button>
     </div>
+    }
 
     <div class="cart-summary">
       <div class="total">Загальна сума: {{ total }} грн</div>
@@ -34,4 +42,5 @@
       </button>
     </div>
   </div>
+  }
 </div>
