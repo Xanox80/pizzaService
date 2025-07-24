@@ -1,6 +1,7 @@
 <div class="additional-products-list">
+  @for (product of additionalProductsList; track product.id) {
   <app-additional-products
-    *ngFor="let product of additionalProductsList"
     [additionalProducts]="product"
   ></app-additional-products>
+  }
 </div>
