@@ -5,16 +5,14 @@
   <button class="goToFeedback" (click)="goToFeedback()">Залишити відгук</button>
   <button class="gotoAdds" (click)="gotoAdds()">Соуси та Напої</button>
   <a mat-button routerLink="/cart" class="cart-link">
-    <button
-      mat-icon-button
-      [matBadge]="cartItemsCount"
-      matBadgeColor="accent"
-      *ngIf="cartItemsCount > 0"
-    >
+    @if (cartItemsCount > 0) {
+    <button mat-icon-button [matBadge]="cartItemsCount" matBadgeColor="accent">
       <mat-icon>shopping_cart</mat-icon>
     </button>
-    <button mat-icon-button *ngIf="cartItemsCount === 0">
+    } @else {
+    <button mat-icon-button>
       <mat-icon>shopping_cart</mat-icon>
     </button>
+    }
   </a>
 </mat-toolbar>
