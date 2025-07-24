@@ -208,9 +208,26 @@ export class DashboardMenuBuilder {
           command: () => (component.selectedSection = 'feedback'),
         },
         {
+          label: 'Найкращий покупець',
+          icon: 'pi pi-user',
+          command: () => (component.selectedSection = 'bestCustomer'),
+        },
+        {
           label: 'Найкращий працівник',
           icon: 'pi pi-users',
           command: () => (component.selectedSection = 'bestEmployee'),
+        },
+        {
+          label: 'Працівники',
+          icon: 'pi pi-users',
+          items: workers.map((worker) => ({
+            label: worker.name,
+            icon: 'pi pi-user',
+            command: () => {
+              component.selectedSection = 'workers';
+              component.selectedWorker = worker;
+            },
+          })),
         }
       );
     }
