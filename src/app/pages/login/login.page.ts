@@ -16,7 +16,9 @@ import { ButtonModule } from 'primeng/button';
 export class LoginComponent {
   username: string = '';
   password: string = '';
+  verificationCode: string = '';
   error: string = '';
+  show2FA: boolean = false;
   returnUrl: string = '/products';
 
   constructor(
@@ -29,10 +31,24 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    if (this.authService.login(this.username, this.password)) {
+    const result = this.authService.login(this.username, this.password);
+
+    if (result === 'success') {
       this.router.navigateByUrl(this.returnUrl);
+    } else if (result === '2fa') {
+      this.show2FA = true;
+    } else if (result === 'locked') {
+      this.error = 'Акаунт тимчасово заблокований. Спробуйте пізніше.';
     } else {
       this.error = 'Невірний логін або пароль';
+    }
+  }
+
+  verifyCode() {
+    if (this.authService.verify2FA(this.verificationCode)) {
+      this.router.navigateByUrl(this.returnUrl);
+    } else {
+      this.error = 'Невірний код підтвердження';
     }
   }
 }
