@@ -56,7 +56,7 @@
     <div class="warehouse-section">
       <h3>Склад продуктів</h3>
       <div class="warehouse-list">
-        @for (product of products; track product) {
+        @defer {@for (product of products; track product) {
         <div class="warehouse-item">
           <img
             [src]="product.image"
@@ -72,7 +72,7 @@
             </div>
           </div>
         </div>
-        }
+        } }
       </div>
     </div>
     } @case ('popular') {
@@ -96,7 +96,7 @@
     </div>
     } @case ('logFeedbacks') {
     <h3>Логи видалення відгуків</h3>
-    @for (log of getFeedbackLogs(); track $index) {
+    @defer { @for (log of getFeedbackLogs(); track $index) {
     <div class="log-item">
       <p class="log-text">"{{ log.text }}"</p>
       <p class="log-date">Залишено: {{ log.date }}</p>
@@ -104,7 +104,7 @@
       <p class="log-user">Видалив: {{ log.removedBy }}</p>
       <button class="closeLogs" (click)="deleteLog($index)">Видалити</button>
     </div>
-    } } @case ('LogPizza') {
+    } } } @case ('LogPizza') {
     <h3>Логи редагування піц</h3>
     @for (log of getPizzaLogs(); track $index) {
     <div class="log-item">
@@ -218,7 +218,7 @@
     </div>
     } @case ('pizzaOrders') {
     <div class="cart-container">
-      @if (cartItems.length === 0) {
+      @defer{@if (cartItems.length === 0) {
       <div class="empty-cart">На даний момент закази відсутні</div>
       } @if (cartItems.length > 0) {
       <div class="cart-items">
@@ -236,7 +236,7 @@
         </div>
         }
       </div>
-      }
+      }}
     </div>
     } @case ('megaDiscountEnd') {
     <div class="stat-card">
